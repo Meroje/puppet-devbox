@@ -55,4 +55,11 @@ class devbox ($hostname, $documentroot, $gitUser, $gitEmail) {
         cwd => "/vagrant/$documentroot/laravel", # REQUIRED
         dev => true, # Install dev dependencies
     }
+
+    # Fix htaccess for vhost_alias
+    exec { "laravel.htaccess.documentroot":
+        command => "sed -i 's/index.php/%{DOCUMENT_ROOT}\/index.php/g' /vagrant/$documentroot/laravel/public/.htaccess",
+        onlyif => "grep \"RewriteRule \^ index.php\" /vagrant/$documentroot/laravel/public/.htaccess",
+        require => File["/vagrant/$documentroot/laravel/public/.htaccess"]
+    }
 }

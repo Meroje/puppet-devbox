@@ -30,6 +30,12 @@ class apache ($hostname, $documentroot) {
         target => "/etc/apache2/mods-available/rewrite.load",
         require => Package['apache2'],
     }
+    # ensures that mod_vhost_alias is loaded and modifies the default configuration file
+    file { "/etc/apache2/mods-enabled/vhost_alias.load":
+        ensure => link,
+        target => "/etc/apache2/mods-available/vhost_alias.load",
+        require => Package['apache2'],
+    }
 
     # Set the configuration
     file { "/etc/apache2/sites-available/010-project":
@@ -48,7 +54,7 @@ class apache ($hostname, $documentroot) {
     }
 
     exec { "apache.project.hostname":
-        command => "sed -i 's/ServerName __HOSTNAME__/ServerName $hostname/' /etc/apache2/sites-available/010-project",
+        command => "sed -i 's/__HOSTNAME__/$hostname/g' /etc/apache2/sites-available/010-project",
         onlyif => "grep \"ServerName __HOSTNAME__\" /etc/apache2/sites-available/010-project",
         require => File['/etc/apache2/sites-available/010-project']
     }

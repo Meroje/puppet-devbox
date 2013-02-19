@@ -29,19 +29,19 @@ class devbox ($hostname, $documentroot, $gitUser, $gitEmail) {
         gitUser => $gitUser,
         gitEmail => $gitEmail
     }
-    include svn
 
-    include zsh
     include vim
 
-    include xhprof
+    file { "/vagrant/$documentroot":
+        ensure => "directory",
+    }
 
     include composer
 
     # One day the following may be possible, until then we need to clone
     # composer::project { 'laravel':
     #     project_name => 'laravel/laravel',
-    #     target_dir   => '/vagrant/web/laravel',
+    #     target_dir   => "/vagrant/$documentroot/laravel",
     #     keep_vcs     => true
     # }
 
@@ -56,8 +56,8 @@ class devbox ($hostname, $documentroot, $gitUser, $gitEmail) {
 
     # Install laravel dependencies
     composer::exec { 'laravel-install':
-        cmd                  => 'install',  # REQUIRED
-        cwd                  => '/vagrant/$documentroot/laravel', # REQUIRED
-        dev                  => true, # Install dev dependencies
+        cmd => 'install',  # REQUIRED
+        cwd => "/vagrant/$documentroot/laravel", # REQUIRED
+        dev => true, # Install dev dependencies
     }
 }

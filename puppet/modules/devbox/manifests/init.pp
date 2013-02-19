@@ -28,4 +28,12 @@ class devbox ($hostname, $documentroot, $gitUser, $gitEmail) {
     include vim
 
     include xhprof
+
+    include composer
+
+    composer::project { 'laravel':
+        project_name => 'laravel/laravel',
+        target_dir   => '/vagrant/web/laravel',
+        keep_vcs     => true
+    }
 }

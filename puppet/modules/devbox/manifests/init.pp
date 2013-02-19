@@ -41,7 +41,7 @@ class devbox ($hostname, $documentroot, $gitUser, $gitEmail) {
     # }
 
     # Clone laravel
-    exec { 'clone laravel':
+    exec { 'laravel.clone':
         cwd     => "/vagrant/$documentroot",
         user    => "vagrant",
         command => "git clone --branch=develop http://github.com/laravel/laravel.git /vagrant/$documentroot/laravel",
@@ -60,6 +60,13 @@ class devbox ($hostname, $documentroot, $gitUser, $gitEmail) {
     exec { "laravel.htaccess.documentroot":
         command => "sed -i 's/index.php/%{DOCUMENT_ROOT}\/index.php/g' /vagrant/$documentroot/laravel/public/.htaccess",
         onlyif => "grep \"RewriteRule \^ index.php\" /vagrant/$documentroot/laravel/public/.htaccess",
-        require => File["/vagrant/$documentroot/laravel/public/.htaccess"]
+        require => Exec['laravel.clone']
+    }
+
+    # Chmod
+    file { "/vagrant/$documentroot/laravel/app/storage":
+        ensure  => "directory",
+        mode    => "0777",
+        recurse => true
     }
 }

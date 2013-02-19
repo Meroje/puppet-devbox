@@ -6,8 +6,7 @@ class devbox ($hostname, $documentroot, $gitUser, $gitEmail) {
     }
 
     include bootstrap
-    include mysql
-    include memcached
+    class { 'percona': server => true, }
     include redis
     include postfix
     include ruby

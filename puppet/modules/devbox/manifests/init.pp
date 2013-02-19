@@ -7,13 +7,8 @@ class devbox ($hostname, $documentroot, $gitUser, $gitEmail) {
 
     include bootstrap
 
-    # Percona == MySQL
-    class { 'percona': server => true, }
-    # Ready to go ! No laravel configuration.
-    # This should be replaced with dev/prod configurations
-    percona::database { 'database':
-      ensure => present;
-    }
+    # Insert MySQL server here
+    # Or insert Postgres server, see #3
 
     include redis
     include postfix

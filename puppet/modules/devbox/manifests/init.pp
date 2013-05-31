@@ -33,5 +33,5 @@ class devbox ($hostname, $documentroot, $gitUser, $gitEmail) {
 
     include composer
 
-    #include laravel
+    include laravel
 }

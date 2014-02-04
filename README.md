@@ -4,23 +4,18 @@ Devbox Puppet Config
 This is my personal puppet configuration which I use with vagrant to setup my development box.
 
 It installs the following:
-* PHP 5.3
-* Apache 2.2
-* MySQL 5.5
-* Memcache 3.0
-* Redis 2.4
+* PHP 5.4.6
+* Apache 2.2.22
+* Ruby 1.9.3p194
+* Redis 2.6.10
 * Git
-* Various php dev tools (phpunit, phing, phpmyadmin, etc)
+* PHPUnit 3.7.14
 * Vim
-* ZSH and oh-my-zsh (default shell)
-* capistrano
-* compass
 
 It has been tested with a Ubuntu precise64 box.
 
 Requirements
 ------------
-
 * Puppet
 * Vagrant
 
